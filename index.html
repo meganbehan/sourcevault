@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A source-grounded legal research vault." />
+    <title>SourceVault — Legal research, kept traceable.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="SourceVault home"><span class="brand-mark">S</span><span>SourceVault</span></a>
+        <p class="project-label">RESEARCH PROJECT</p>
+        <button id="projectName" class="project-name" type="button" title="Rename project">Private Ordering in Business Associations</button>
+        <nav aria-label="Main navigation">
+          <button class="nav-item active" data-view="vault"><span>◫</span> Vault <strong id="sourceCount">0</strong></button>
+          <button class="nav-item" data-view="notes"><span>◌</span> Research notes</button>
+          <button class="nav-item" data-view="about"><span>ⓘ</span> How it works</button>
+        </nav>
+        <div class="sidebar-foot">
+          <p>Source-grounded research</p>
+          <small>Draft citations require verification.</small>
+        </div>
+      </aside>
+
+      <main id="top" class="main-content">
+        <section id="vaultView" class="view">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">YOUR PRIVATE SOURCE VAULT</p>
+              <h1>Find the source<br><em>before</em> the sentence.</h1>
+              <p class="lede">Search only the cases, articles, and materials you add. Every result stays connected to its source.</p>
+            </div>
+            <button id="openAdd" class="button button-primary">+ Add a source</button>
+          </header>
+
+          <section class="question-card" aria-labelledby="askHeading">
+            <div class="question-heading">
+              <span class="spark">✦</span>
+              <div><p class="eyebrow">ASK YOUR VAULT</p><h2 id="askHeading">What are you trying to find?</h2></div>
+            </div>
+            <form id="searchForm" class="search-form">
+              <label class="sr-only" for="vaultQuery">Search your uploaded sources</label>
+              <input id="vaultQuery" name="query" placeholder="e.g., Which sources discuss disclosure obligations?" autocomplete="off" />
+              <button class="button button-dark" type="submit">Search vault <span>→</span></button>
+            </form>
+            <p class="helper">Searches your saved source text, titles, tags, and notes only. No external research.</p>
+          </section>
+
+          <section id="resultsSection" class="results hidden" aria-live="polite">
+            <div class="section-heading"><div><p class="eyebrow">VAULT RESULTS</p><h2 id="resultsTitle">Relevant passages</h2></div><button id="clearSearch" class="text-button">Clear search</button></div>
+            <div id="resultsList" class="results-list"></div>
+          </section>
+
+          <section class="vault-section" aria-labelledby="sourcesHeading">
+            <div class="section-heading"><div><p class="eyebrow">SAVED MATERIALS</p><h2 id="sourcesHeading">Your sources</h2></div><button id="loadDemo" class="text-button">Load demo sources</button></div>
+            <div id="emptyVault" class="empty-state hidden"><div class="empty-icon">⌁</div><h3>Your vault is waiting.</h3><p>Add a source or load the fictional demo materials to see how SourceVault works.</p><button class="button button-primary open-add">Add your first source</button></div>
+            <div id="sourceGrid" class="source-grid"></div>
+          </section>
+        </section>
+
+        <section id="notesView" class="view hidden"><header class="page-header compact"><div><p class="eyebrow">RESEARCH NOTES</p><h1>Saved findings.</h1><p class="lede">Passages you have marked for later, always linked back to the original source.</p></div></header><div id="notesList" class="notes-list"></div></section>
+        <section id="aboutView" class="view hidden"><header class="page-header compact"><div><p class="eyebrow">SOURCEVAULT VERSION 1</p><h1>A careful research companion.</h1></div></header><div class="about-card"><h2>What it does</h2><p>SourceVault stores source text in this browser, finds matching passages, and helps you keep editable citation details beside your research. It does not browse the web, give legal advice, or verify Bluebook compliance.</p><h2>How to use it</h2><ol><li>Add a text-readable PDF, text file, or pasted source.</li><li>Confirm the source information and add tags.</li><li>Search your vault by keyword, phrase, concept, or subtopic.</li><li>Review the returned passage and verify any draft citation before using it.</li></ol><p class="notice">For this class prototype, use made-up or public materials only.</p></div></section>
+      </main>
+    </div>
+
+    <dialog id="sourceDialog" class="source-dialog">
+      <form id="sourceForm" method="dialog">
+        <div class="modal-header"><div><p class="eyebrow">ADD TO VAULT</p><h2 id="dialogTitle">New source</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Close">×</button></div>
+        <div class="form-grid">
+          <label>Source title<input name="title" required placeholder="e.g., Miller v. Harbor Holdings" /></label>
+          <label>Source type<select name="type"><option>Case</option><option>Law review article</option><option>Statute or regulation</option><option>Other legal or academic source</option></select></label>
+          <label class="wide">Citation text <span class="optional">(optional)</span><input name="citation" placeholder="Paste or enter a draft citation" /></label>
+          <label>Author or court <input name="author" placeholder="e.g., Ninth Circuit" /></label>
+          <label>Year <input name="year" inputmode="numeric" placeholder="e.g., 2026" /></label>
+          <label class="wide">Tags <span class="optional">(comma-separated)</span><input name="tags" placeholder="e.g., disclosure, fiduciary duty" /></label>
+          <label class="wide upload-field">Upload a text-readable file <span class="optional">(.pdf, .txt, .md)</span><input id="fileInput" type="file" accept=".pdf,.txt,.md,text/plain,application/pdf" /><small id="fileStatus">Or paste source text below. Scanned PDFs are not supported.</small></label>
+          <label class="wide">Source text <textarea name="text" required rows="9" placeholder="Paste text from the source here. This is what SourceVault searches."></textarea></label>
+          <label class="wide">Notes <span class="optional">(optional)</span><textarea name="notes" rows="3" placeholder="Your own research notes about this source."></textarea></label>
+        </div>
+        <div class="modal-actions"><button type="button" id="deleteSource" class="text-button danger hidden">Delete source</button><span></span><button type="button" id="cancelDialog" class="button button-light">Cancel</button><button class="button button-primary" type="submit">Save source</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="excerptDialog" class="source-dialog small-dialog">
+      <form id="excerptForm" method="dialog"><div class="modal-header"><div><p class="eyebrow">SAVE EXCERPT</p><h2>Add a traceable passage</h2></div><button type="button" id="closeExcerpt" class="icon-button" aria-label="Close">×</button></div><input type="hidden" name="sourceId" /><div class="form-grid"><label class="wide">Excerpt<textarea name="excerpt" required rows="7" placeholder="Paste an exact passage from this source."></textarea></label><label>PDF-viewer page <span class="optional">(locator)</span><input name="pdfPage" inputmode="numeric" placeholder="e.g., 14" /></label><label>Printed/reporter page <span class="optional">(for pincite)</span><input name="printedPage" inputmode="numeric" placeholder="e.g., 462" /></label><label class="wide">Note <span class="optional">(optional)</span><input name="note" placeholder="Why is this useful?" /></label></div><p class="notice">A proposed pincite appears only when you enter a verified printed or reporter page.</p><div class="modal-actions"><span></span><button type="button" id="cancelExcerpt" class="button button-light">Cancel</button><button class="button button-primary" type="submit">Save excerpt</button></div></form>
+    </dialog>
+
+    <template id="sourceTemplate"><article class="source-card"><div class="card-top"><span class="type-pill"></span><button class="more-button edit-source" aria-label="Edit source">•••</button></div><h3 class="source-title"></h3><p class="source-meta"></p><p class="source-citation"></p><div class="tag-list"></div><div class="card-actions"><button class="text-button add-excerpt">+ Save excerpt</button><button class="text-button view-source">View source</button></div></article></template>
+    <template id="resultTemplate"><article class="result-card"><div class="result-label"></div><blockquote></blockquote><div class="result-footer"><div><strong class="result-title"></strong><span class="result-location"></span><p class="result-citation"></p></div><button class="text-button save-result">Save note</button></div></article></template>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
